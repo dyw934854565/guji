@@ -1,38 +1,30 @@
-var spawn = require("cross-spawn")
-var which = require('which')
-var path = require('path')
-var copy = require('copy')
-var git = which.sync("git")
-var root = exec(git, ["rev-parse", "--show-toplevel"])
-  .stdout.toString()
-  .trim();
-var copyPath = './src/utils'
+var path = require("path");
+var copy = require("copy");
+var root = path.dirname(require.main.filename);
 
-init()
+console.log(root, require.main.filename);
+
+var copyPath = "./src/utils";
+
+init();
 
 function init() {
-  parsePath()
+  parsePath();
 
-  copy('./src/*.js', path.join(root, copyPath), function (err, file) {
+  copy("./src/*.js", path.join(root, copyPath), function(err, file) {
     if (err) {
-      console.log('copy, fail: ', err)
-      return
+      console.log("copy, fail: ", err);
+      return;
     }
-    console.log('files coped: ', file.length)
-  })
+    console.log("files coped: ", file.length);
+  });
 }
 
 function parsePath() {
   try {
-    json = require(path.join(root, 'package.json'))
+    json = require(path.join(root, "package.json"));
     copyPath = json["guji-path"] || copyPath;
   } catch (e) {
-    console.log('package.json fail, use default path: ' + copyPath, e)
+    console.log("package.json fail, use default path: " + copyPath, e);
   }
-}
-
-function exec(bin, args) {
-  return spawn.sync(bin, args, {
-    stdio: "pipe"
-  });
 }
