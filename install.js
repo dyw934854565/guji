@@ -1,8 +1,9 @@
 var path = require("path");
 var copy = require("copy");
-var root = path.dirname(require.main.filename);
-
-console.log(root, require.main.filename);
+var root = process.mainModule.paths
+  .filter(p => !p.includes("node_modules"))
+  .shift();
+console.log(root, process.mainModule.paths);
 
 var copyPath = "./src/utils";
 
