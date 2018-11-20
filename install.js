@@ -7,7 +7,7 @@ init();
 
 function init() {
   parsePath();
-  copy(__dirname + "/src/*.js", path.resolve(copyPath), function(err, file) {
+  copy(__dirname + "/src/*.js", path.resolve(process.cwd(), copyPath), function(err, file) {
     if (err) {
       console.log("copy, fail: ", err);
       return;
