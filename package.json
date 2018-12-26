@@ -1,11 +1,13 @@
 {
   "name": "guji",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "node install.js"
+    "test": "jest --coverage"
   },
+  "files": [
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dyw934854565/guji.git"
@@ -16,7 +18,10 @@
     "url": "https://github.com/dyw934854565/guji/issues"
   },
   "homepage": "https://github.com/dyw934854565/guji#readme",
-  "dependencies": {
-    "copy": "^0.3.2"
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "jest": "^23.6.0"
   }
 }
