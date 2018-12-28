@@ -1,6 +1,6 @@
 export default function arrToObj (arr = [], fn) {
   const res = {}
-  arr.map(item => {
+  arr.forEach(item => {
     const [key, value] = fn.call(arr, item)
     res[key] = value
   })

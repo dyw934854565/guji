@@ -1,6 +1,6 @@
 import { isType } from './getType'
 export default function logTime(fn, text, _this, callback = console.log) {
-  const label = text || fn.name || 'call time:'
+  const label = text || (fn.name || '') + 'call time:'
   return function (...args) {
     const startT = Date.now()
     const res = fn.apply(_this || this, args)
