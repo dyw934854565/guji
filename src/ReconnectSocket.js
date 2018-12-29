@@ -10,7 +10,7 @@ export const statusCode = {
   closed: 3,
   error: 4
 }
-export default class ReconnetSocket extends EventEmitter {
+export default class ReconnectSocket extends EventEmitter {
   constructor (WebSocket, ...args) {
     super()
     this.args = args

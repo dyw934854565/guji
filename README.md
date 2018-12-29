@@ -1,6 +1,6 @@
 # guji
 
-This registry will provide some simple but useful function as lodash
+This repository will provide some simple but useful function as lodash
 
 The best advantage is the cute name.
 
@@ -48,3 +48,5 @@ const obj = arrToObj([
 - safeObj
 
 - safeParse
+
+- ReconnectSocket
