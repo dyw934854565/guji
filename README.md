@@ -51,4 +51,4 @@ const obj = arrToObj([
 
 - ReconnectSocket
 
-- ready {emitReady, onReady}
+- ready {emitReady, onReady, isReady}

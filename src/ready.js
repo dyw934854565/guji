@@ -23,3 +23,7 @@ export function onReady(eventName, fn) {
   }
   return defer.promise
 }
+
+export function isReady(eventName) {
+  return statusMap[eventName]
+}
