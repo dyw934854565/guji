@@ -37,7 +37,7 @@ const obj = arrToObj([
 
 - sleep
 
-- getType
+- getType {getType, isType}
 
 - logResult
 
@@ -50,3 +50,5 @@ const obj = arrToObj([
 - safeParse
 
 - ReconnectSocket
+
+- ready {emitReady, onReady}
