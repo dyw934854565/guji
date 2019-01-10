@@ -80,8 +80,8 @@ export default class ReconnectSocket extends EventEmitter {
       })
     }
   }
-  close () {
+  close (code) {
     this[_setStatus](statusCode.closed)
-    this.ws.close()
+    this.ws.close(code);
   }
 }
