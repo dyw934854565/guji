@@ -1,5 +1,5 @@
 import EventEmitter from "events"
-import getDefer from 'guji/src/getDefer'
+import getDefer from './getDefer'
 const statusMap = {}
 const dataMap = {}
 const events = new EventEmitter();
