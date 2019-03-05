@@ -60,17 +60,22 @@ export default class ReconnectSocket extends EventEmitter {
     ws.onerror = err => {
       this[_setStatus](statusCode.error)
       this.emit('error', err)
+      setTimeout(() => {
+        if (this[_status] === statusCode.error) {
+          this[_open](true);
+        }
+      }, 20000);
     }
   }
   getStatus () {
     return this[_status]
   }
   send (...args) {
-    if (
-      this[_status] === statusCode.closed ||
-      this[_status] === statusCode.error
-    ) {
+    if (this[_status] === statusCode.closed) {
       throw new Error('websocket is closed' + this[_status])
+    }
+    if (this[_status] === statusCode.error) {
+      this[_open](true);
     }
     if (this[_status] === statusCode.connected) {
       this.ws.send(...args)
