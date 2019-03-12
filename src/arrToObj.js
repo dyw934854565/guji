@@ -1,7 +1,7 @@
 export default function arrToObj (arr = [], fn) {
   const res = {}
-  arr.forEach(item => {
-    const [key, value] = fn.call(arr, item)
+  arr.forEach((...args) => {
+    const [key, value] = fn.apply(arr, args)
     res[key] = value
   })
   return res
