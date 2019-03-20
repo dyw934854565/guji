@@ -4,6 +4,6 @@ export default function callLimit(fn, limit = 1, _this, callback = console.log) 
     if (counter <= limit) {
       return fn.apply(_this || this, args);
     }
-    callback && callback('extra call');
+    callback && callback(counter, 'extra call');
   }
 }

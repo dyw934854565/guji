@@ -3,10 +3,12 @@
   "version": "1.0.6",
   "description": "",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "build": "babel src --out-dir dist --ignore *.test.js"
   },
   "files": [
-    "src"
+    "src",
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -19,9 +21,12 @@
   },
   "homepage": "https://github.com/dyw934854565/guji#readme",
   "devDependencies": {
-    "babel-preset-env": "^1.7.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2105": "0.0.0",
     "jest": "^23.6.0"
-  }
+  },
+  "dependencies": {}
 }
