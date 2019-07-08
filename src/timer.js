@@ -8,7 +8,7 @@ function start(keys, str) {
   const now = getNow()
   keys[str] = now
 }
-function end(keys, str, fn = console.log) {
+function end(keys, str, fn = console.log.bind(console)) {
   let t = 0
   if (keys[str]) {
     t = getNow() - keys[str]

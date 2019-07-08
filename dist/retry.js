@@ -7,7 +7,7 @@ exports.default = retry;
 
 var _getType = require("./getType");
 
-function retry(fn, retryTimes = 2, _this, onerror = console.log) {
+function retry(fn, retryTimes = 2, _this, onerror = console.log.bind(console)) {
   return function (...args) {
     let res;
     try {

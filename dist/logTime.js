@@ -7,7 +7,7 @@ exports.default = logTime;
 
 var _getType = require('./getType');
 
-function logTime(fn, text, _this, callback = console.log) {
+function logTime(fn, text, _this, callback = console.log.bind(console)) {
   const label = text || (fn.name || '') + 'call time:';
   return function (...args) {
     const startT = Date.now();

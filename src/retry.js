@@ -1,5 +1,5 @@
 import { isType } from './getType'
-export default function retry(fn, retryTimes = 2, _this, onerror = console.log) {
+export default function retry(fn, retryTimes = 2, _this, onerror = console.log.bind(console)) {
   return function (...args) {
     let res;
     try {
