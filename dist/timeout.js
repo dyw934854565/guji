@@ -21,6 +21,9 @@ function timeout(fn, ms = 100, _this) {
     };
   }
   // fn is promise
-  const defer = (0, _getDefer2.default)(ms);
-  return Promise.race([fn, defer.promise]);
+  if ((0, _getType.isType)(fn, 'promise') || fn.then && fn.catch) {
+    const defer = (0, _getDefer2.default)(ms);
+    return Promise.race([fn, defer.promise]);
+  }
+  throw new Error('第一个参数应该是函数或者Promise');
 }

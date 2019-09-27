@@ -1,6 +1,5 @@
 import timeout from './timeout'
 import sleep from './sleep'
-import getDefer from './getDefer'
 
 test('timeout resolve', () => {
   const limit200Sleep = timeout(sleep, 200)
@@ -27,4 +26,21 @@ test('timeout reject', () => {
   limit200Reject(100, 123).then(() => 1, res =>
     expect(res).toBe(123)
   )
+})
+
+test('args check', () => {
+  const fun = () => timeout(123)
+  expect(fun).toThrow()
+})
+
+test('promise timeout', () => {
+  const limit300Sleep = timeout(sleep(200), 300)
+  const limit100Sleep = timeout(sleep(200), 100)
+  let res = 0
+  limit300Sleep.then(() => res = 1, () => res = 0).then(() => {
+    expect(res).toBe(1);
+  });
+  limit100Sleep.then(() => res = 1, () => res = 0).then(() => {
+    expect(res).toBe(0);
+  });
 })

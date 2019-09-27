@@ -8,6 +8,9 @@ export default function timeout(fn, ms = 100, _this) {
     }
   }
   // fn is promise
-  const defer = getDefer(ms)
-  return Promise.race([fn, defer.promise])
+  if (isType(fn, 'promise') || (fn.then && fn.catch)) {
+    const defer = getDefer(ms)
+    return Promise.race([fn, defer.promise])
+  }
+  throw new Error('第一个参数应该是函数或者Promise')
 }
