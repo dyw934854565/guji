@@ -5,20 +5,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.afterSlice = exports.beforeSlice = undefined;
 
-var _firstUpcase = require('./firstUpcase');
+var _getType = require('./getType');
 
-var _firstUpcase2 = _interopRequireDefault(_firstUpcase);
+var _firstUppercase = require('./firstUppercase');
+
+var _firstUppercase2 = _interopRequireDefault(_firstUppercase);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function fnSlice(isBefore, target, key, fn) {
   let fn_ = fn;
   if (!fn_) {
-    const firstUpcaseKey = (0, _firstUpcase2.default)(key);
-    const fullKey = (isBefore ? 'before' : 'after') + firstUpcaseKey;
+    const firstUppercaseKey = (0, _firstUppercase2.default)(key);
+    const fullKey = (isBefore ? 'before' : 'after') + firstUppercaseKey;
     fn_ = target[fullKey];
     if (!fn_) return;
   }
+  if (!(0, _getType.isType)(fn_, 'function')) return;
   if (target[key]) {
     const _self = target[key];
     target[key] = function (...args) {
@@ -32,11 +35,7 @@ function fnSlice(isBefore, target, key, fn) {
     };
   } else {
     target[key] = function (...args) {
-      if (isBefore) {
-        fn_.apply(this, args);
-      } else {
-        fn_.apply(this, args);
-      }
+      fn_.apply(this, args);
     };
   }
 }

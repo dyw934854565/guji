@@ -17,7 +17,11 @@ function timeout(fn, ms = 100, _this) {
   if ((0, _getType.isType)(fn, 'function')) {
     return function (...args) {
       const defer = (0, _getDefer2.default)(ms);
-      return Promise.race([fn.apply(_this || this, args), defer.promise]);
+      const res = fn.apply(_this || this, args);
+      if ((0, _getType.isType)(res, "promise") || res.then && res.catch) {
+        return Promise.race([res, defer.promise]);
+      }
+      return res;
     };
   }
   // fn is promise
