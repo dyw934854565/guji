@@ -1,36 +1,35 @@
-import timer, { create } from './timer'
+import timer from './timer'
 import sleep from './sleep'
 
 test('timer', async () => {
   let res
-  const _log = console.log
-  console.log = (str, time) => {
-    res = {str, time}
-  }
-  timer.start('123')
-  await sleep(1000)
-  timer.end('123')
-  expect(res.str).toBe('123')
-  expect(Boolean(Math.abs(res.time - 1000) < 10)).toBe(true)
-
-
-  timer.end('123', (str, time) => {
-    expect(str).toBe('123')
-    expect(time).toBe(0)
-  })
+  console.log = (time, str) => {
+    res = { str, time };
+  };
+  const timeEnd = timer();
+  await sleep(1000);
+  timeEnd("123", );
+  expect(res.str).toBe('123');
+  expect(res.time).toBeCloseTo(1000, -1.4);
 })
 
-test('create', async () => {
-  const tm1 = create()
-  const tm2 = create()
-  tm1.start('345')
-  await sleep(1000)
-  tm2.end('345', (str, time) => {
-    expect(str).toBe('345')
-    expect(time).toBe(0)
-  })
-  tm1.end('345', (str, time) => {
-    expect(str).toBe('345')
-    expect(Boolean(Math.abs(time - 1000) < 10)).toBe(true)
-  })
+test('time end', () => {
+  const timeEnd = timer();
+  const cb1 = jest.fn();
+  const cb2 = jest.fn();
+  timeEnd('13', cb1);
+  timeEnd('24', cb2);
+  expect(cb1).toHaveBeenCalled();
+  expect(cb2).not.toHaveBeenCalled();
 })
+
+test("time 2", () => {
+  const timeEnd = timer();
+  const timeEnd2 = timer();
+  const cb1 = jest.fn();
+  const cb2 = jest.fn();
+  timeEnd("13", cb1);
+  timeEnd2("24", cb2);
+  expect(cb1).toHaveBeenCalled();
+  expect(cb2).toHaveBeenCalled();
+});

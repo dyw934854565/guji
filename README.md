@@ -16,7 +16,7 @@ npm install guji -S
 each api in single file. to use like arrToObj
 
 ```javascript
-import arrToObj from 'guji/arrToObj'
+import arrToObj from 'guji/src/arrToObj'
 const obj = arrToObj([
   {key: 'key1', value: 'value1'},
   {key: 'key2', value: 'value2'}
@@ -27,15 +27,19 @@ const obj = arrToObj([
 
 - arrToObj
 
-- objToArr
+declare function arrToObj(arr: any[], fn: (value: any, index: number, array: any[]) => [string, any]): Object
 
 - cache
 
-- retry
+- callLimit
+
+- event
+
+- firstUppercase
+
+- funSlice
 
 - getDefer
-
-- sleep
 
 - getType {getType, isType}
 
@@ -43,12 +47,24 @@ const obj = arrToObj([
 
 - logTime
 
+- objToArr
+
+- retry
+
+- ready {emitReady, onReady, isReady}
+
+- ReconnectSocket
+
+- retry
+
 - safeFun
 
 - safeObj
 
 - safeParse
 
-- ReconnectSocket
+- sleep
 
-- ready {emitReady, onReady, isReady}
+- timeout
+
+- timer

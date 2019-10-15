@@ -44,3 +44,10 @@ test('promise timeout', () => {
     expect(res).toBe(0);
   });
 })
+
+test("promise fn => not promise", () => {
+  const limit300Sleep = timeout(() => 123, 300);
+  const limit100Sleep = timeout(() => 456, 100);
+  expect(limit100Sleep()).toBe(456);
+  expect(limit300Sleep()).toBe(123);
+});

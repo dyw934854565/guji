@@ -1,6 +1,6 @@
 {
   "name": "guji",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "",
   "scripts": {
     "test": "jest --coverage",
@@ -10,6 +10,7 @@
     "src",
     "dist"
   ],
+  "types": "src",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dyw934854565/guji.git"
