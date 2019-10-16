@@ -4,8 +4,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = createEvent;
+exports.makeEvent = makeEvent;
 
 var _getType = require('./getType');
+
+var _firstUppercase = require('./firstUppercase');
+
+var _firstUppercase2 = _interopRequireDefault(_firstUppercase);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function createEvent() {
   let cbs = [];
@@ -37,4 +44,20 @@ function createEvent() {
       return cbs;
     }
   };
+}
+
+function makeEvent(target, key, targetKey) {
+  if (!target || !key || !targetKey) throw new Error('miss makeEvent params');
+  if (target[`on${targetKey}`] && target[`off${targetKey}`]) return; // has makeEvent
+  targetKey = (0, _firstUppercase2.default)(targetKey);
+  const oldFn = target[key];
+  const newFn = function (...args) {
+    oldFn && oldFn(...args);
+    evt.emit(...args);
+  };
+  const evt = createEvent();
+  target[key] = newFn;
+  target[`on${targetKey}`] = evt.on;
+  target[`off${targetKey}`] = evt.off;
+  target[`get${targetKey}Handlers`] = evt.getHandlers;
 }

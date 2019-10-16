@@ -1,4 +1,5 @@
 import { isType } from './getType'
+import firstUppercase from "./firstUppercase";
 export default function createEvent() {
   let cbs = []
   return {
@@ -29,4 +30,20 @@ export default function createEvent() {
       return cbs
     }
   }
+}
+
+export function makeEvent(target, key, targetKey) {
+  if (!target || !key || !targetKey) throw new Error('miss makeEvent params')
+  if (target[`on${targetKey}`] && target[`off${targetKey}`]) return // has makeEvent
+  targetKey = firstUppercase(targetKey)
+  const oldFn = target[key]
+  const newFn = function(...args) {
+    oldFn && oldFn(...args)
+    evt.emit(...args)
+  }
+  const evt = createEvent()
+  target[key] = newFn
+  target[`on${targetKey}`] = evt.on
+  target[`off${targetKey}`] = evt.off
+  target[`get${targetKey}Handlers`] = evt.getHandlers
 }

@@ -1,4 +1,4 @@
-import createEvent from './event'
+import createEvent, { makeEvent } from "./event";
 
 test("on emit", () => {
   const event = createEvent()
@@ -92,4 +92,46 @@ test("emit times", () => {
   event.emit()
   event.emit()
   expect(cb).toHaveBeenCalledTimes(2)
-})
+});
+
+test("makeEvent", () => {
+  const onerror = jest.fn();
+  const cb = jest.fn();
+  const target = { onerror };
+  makeEvent(target, 'onerror', 'error');
+  expect(target.onError).toBeInstanceOf(Function);
+  expect(target.offError).toBeInstanceOf(Function);
+  expect(target.getErrorHandlers).toBeInstanceOf(Function);
+
+  target.onError(cb);
+  target.onerror(2);
+
+  expect(onerror).toBeCalledWith(2);
+  expect(cb).toBeCalledWith(2);
+
+  expect(() => makeEvent(undefined, "onerror", "error")).toThrowError();
+  expect(() => makeEvent({}, "", "error")).toThrowError();
+  expect(() => makeEvent({}, "onerror", "")).toThrowError();
+  expect(() => makeEvent({}, "onerror", "error")).not.toThrowError();
+});
+
+test("makeEvent off getHandlers", () => {
+  const onerror = jest.fn();
+  const cb = jest.fn();
+  const target = { onerror };
+  makeEvent(target, 'onerror', 'error');
+  expect(target.onError).toBeInstanceOf(Function);
+  expect(target.offError).toBeInstanceOf(Function);
+  expect(target.getErrorHandlers).toBeInstanceOf(Function);
+
+  target.onError(cb);
+  target.onerror(2, 4);
+
+  expect(onerror).toBeCalledWith(2, 4);
+  expect(cb).toBeCalledWith(2, 4);
+
+  expect(() => makeEvent(undefined, "onerror", "error")).toThrowError();
+  expect(() => makeEvent({}, "", "error")).toThrowError();
+  expect(() => makeEvent({}, "onerror", "")).toThrowError();
+  expect(() => makeEvent({}, "onerror", "error")).not.toThrowError();
+});
