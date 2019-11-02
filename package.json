@@ -8,9 +8,10 @@
   },
   "files": [
     "src",
+    "types",
     "dist"
   ],
-  "types": "src",
+  "types": "types",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dyw934854565/guji.git"
