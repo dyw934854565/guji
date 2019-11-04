@@ -4,14 +4,12 @@
   "description": "",
   "scripts": {
     "test": "jest --coverage",
-    "build": "rimraf dist && babel src --out-dir dist --ignore *.test.js"
+    "build": "rimraf dist && cpx \"src/*.d.ts\" dist && babel src --out-dir dist --ignore *.test.js"
   },
   "files": [
     "src",
-    "types",
     "dist"
   ],
-  "types": "types",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dyw934854565/guji.git"
@@ -29,7 +27,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2105": "0.0.0",
     "jest": "^23.6.0",
+    "cpx": "^1.5.0",
     "rimraf": "^3.0.0"
-  },
-  "dependencies": {}
+  }
 }

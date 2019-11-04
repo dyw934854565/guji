@@ -5,6 +5,6 @@
     "preserveConstEnums": true
   },
   "include": [
-    "types/*.d.ts"
+    "src/*.d.ts"
   ]
 }
