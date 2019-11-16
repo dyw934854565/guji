@@ -55,6 +55,8 @@ declare function arrToObj(arr: any[], fn: (value: any, index: number, array: any
 
 - ReconnectSocket
 
+- refresh
+
 - retry
 
 - safeFun
