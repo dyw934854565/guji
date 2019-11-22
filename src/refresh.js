@@ -7,7 +7,7 @@ export default function refresh(fn, _thisArg) {
     if (lastRes) {
       lastRes.reject(new Error('data has expired'))
     }
-    if (isType(res, 'promise') || (res.then && res.cache)) {
+    if (isType(res, 'promise') || (res && res.then && res.cache)) {
       lastRes = getDefer()
       return Promise.race([res, lastRes.promise])
     } else {

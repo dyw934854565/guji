@@ -9,7 +9,7 @@ export default function cache(fn, _thisArg, resetReject = true, keyFn) {
     }
     res[key] = fn.apply(_thisArg || this, args)
     isCached[key] = true
-    if (resetReject && (isType(res[key], 'promise') || (res[key].then && res[key].catch))) {
+    if (resetReject && (isType(res[key], 'promise') || (res[key] && res[key].then && res[key].catch))) {
       res[key].catch(e => {
         res[key] = undefined;
         isCached[key] = false;

@@ -12,7 +12,7 @@ function logTime(fn, text, _this, callback = console.log.bind(console)) {
   return function (...args) {
     const startT = Date.now();
     const res = fn.apply(_this || this, args);
-    if ((0, _getType.isType)(res, 'promise') || res.then && res.catch) {
+    if ((0, _getType.isType)(res, 'promise') || res && res.then && res.catch) {
       res.catch().then(() => {
         const consume = Date.now() - startT;
         callback && callback(label, consume);

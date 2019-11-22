@@ -18,14 +18,14 @@ function timeout(fn, ms = 100, _this) {
     return function (...args) {
       const defer = (0, _getDefer2.default)(ms);
       const res = fn.apply(_this || this, args);
-      if ((0, _getType.isType)(res, "promise") || res.then && res.catch) {
+      if ((0, _getType.isType)(res, "promise") || res && res.then && res.catch) {
         return Promise.race([res, defer.promise]);
       }
       return res;
     };
   }
   // fn is promise
-  if ((0, _getType.isType)(fn, 'promise') || fn.then && fn.catch) {
+  if ((0, _getType.isType)(fn, 'promise') || fn && fn.then && fn.catch) {
     const defer = (0, _getDefer2.default)(ms);
     return Promise.race([fn, defer.promise]);
   }
