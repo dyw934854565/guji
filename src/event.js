@@ -55,6 +55,7 @@ export function makeEvent(target, key, targetKey) {
   }
   target[key] = newFn
   target[`on${targetKey}`] = evt.on.bind(evt)
+  target[`once${targetKey}`] = evt.once.bind(evt)
   target[`off${targetKey}`] = evt.off.bind(evt)
   target[`get${targetKey}Handlers`] = evt.getHandlers.bind(evt)
 }

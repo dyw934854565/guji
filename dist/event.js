@@ -19,13 +19,23 @@ function createEvent() {
   return {
     on(cb) {
       if (!(0, _getType.isType)(cb, 'function')) {
-        return new Error('回调应该是函数');
+        throw new Error('回调应该是函数');
       }
       const index = cbs.indexOf(cb);
-      if (index > -1) {
-        return;
+      if (index < 0) {
+        cbs.push(cb);
       }
-      cbs.push(cb);
+      return cb;
+    },
+    once(cb) {
+      if (!(0, _getType.isType)(cb, 'function')) {
+        throw new Error('回调应该是函数');
+      }
+      const onceWrap = (...args) => {
+        this.off(onceWrap);
+        cb(...args);
+      };
+      return this.on(onceWrap);
     },
     off(cb) {
       if (!cb) {
@@ -38,7 +48,8 @@ function createEvent() {
       }
     },
     emit(...args) {
-      cbs.forEach(cb => cb(...args));
+      // 复制一下，防止调用的时候cbs的length变化，导致部分执行不到
+      [...cbs].forEach(cb => cb(...args));
     },
     getHandlers() {
       return cbs;
@@ -51,13 +62,14 @@ function makeEvent(target, key, targetKey) {
   if (target[`on${targetKey}`] && target[`off${targetKey}`]) return; // has makeEvent
   targetKey = (0, _firstUppercase2.default)(targetKey);
   const oldFn = target[key];
+  const evt = createEvent();
   const newFn = function (...args) {
     oldFn && oldFn(...args);
     evt.emit(...args);
   };
-  const evt = createEvent();
   target[key] = newFn;
-  target[`on${targetKey}`] = evt.on;
-  target[`off${targetKey}`] = evt.off;
-  target[`get${targetKey}Handlers`] = evt.getHandlers;
+  target[`on${targetKey}`] = evt.on.bind(evt);
+  target[`once${targetKey}`] = evt.once.bind(evt);
+  target[`off${targetKey}`] = evt.off.bind(evt);
+  target[`get${targetKey}Handlers`] = evt.getHandlers.bind(evt);
 }
