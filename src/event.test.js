@@ -74,7 +74,7 @@ test("do not on same", () => {
 
 test("handler should be function", () => {
   const event = createEvent()
-  event.on(123)
+  expect(() => event.on(123)).toThrowError()
   expect(event.getHandlers().length).toBe(0)
 });
 
@@ -92,6 +92,32 @@ test("emit times", () => {
   event.emit()
   event.emit()
   expect(cb).toHaveBeenCalledTimes(2)
+});
+
+test("once", () => {
+  const event = createEvent()
+  const cb = jest.fn()
+  const cb2 = jest.fn()
+  event.once(cb)
+  event.on(cb2)
+  expect(event.getHandlers().length).toBe(2)
+  event.emit(123)
+  event.emit(456)
+  expect(cb).toBeCalledWith(123);
+  expect(event.getHandlers().length).toBe(1)
+  expect(cb).toHaveBeenCalledTimes(1)
+  expect(cb2).toHaveBeenCalledTimes(2)
+});
+
+test("once off", () => {
+  const event = createEvent()
+  const cb = jest.fn()
+  const cb2 = event.once(cb)
+  expect(event.getHandlers().length).toBe(1)
+  event.off(cb2)
+  expect(event.getHandlers().length).toBe(0)
+  event.emit(456)
+  expect(cb).toHaveBeenCalledTimes(0)
 });
 
 test("makeEvent", () => {
