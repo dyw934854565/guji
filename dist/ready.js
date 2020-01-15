@@ -33,7 +33,7 @@ function onReady(eventName, fn) {
     defer.resolve(data);
     fn && fn(data);
   } else {
-    events.on(eventName, data => {
+    events.once(eventName, data => {
       defer.resolve(data);
       fn && fn(data);
     });

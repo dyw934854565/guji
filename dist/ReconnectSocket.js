@@ -27,18 +27,24 @@ class ReconnectSocket extends _events2.default {
     this.args = args;
     this.WebSocket = WebSocket;
     this[_setStatus](statusCode.init);
-    this.on('netchange', res => {
-      if (res.isConnected && this[_status] === statusCode.error) {
+    this.on('net-change', res => {
+      if (res.isConnected) {
         this[_open](true);
       }
     });
     this[_open]();
   }
   [_setStatus](status) {
-    console.log('ws status change', status);
+    this.emit('status-change', status);
     this[_status] = status;
   }
   [_open](isReconnect = false) {
+    if (this[_status] === statusCode.closed) {
+      throw new Error('websocket is closed' + this[_status]);
+    }
+    if (this[_status] !== statusCode.error) {
+      return;
+    }
     this[_setStatus](statusCode.connecting);
     const ws = this.ws = new this.WebSocket(...this.args);
     if (isReconnect === true) {
@@ -52,17 +58,10 @@ class ReconnectSocket extends _events2.default {
       }
     };
     ws.onclose = () => {
-      if (this[_status] === statusCode.error) {
-        return;
-      }
       ws.onclose = null;
       ws.onopen = null;
       ws.onerror = null;
       ws.onmessage = null;
-      ws.close(100);
-      if (this[_status] === statusCode.closed) {
-        return;
-      }
       this[_open](true);
     };
     ws.onmessage = res => {
@@ -71,23 +70,13 @@ class ReconnectSocket extends _events2.default {
     ws.onerror = err => {
       this[_setStatus](statusCode.error);
       this.emit('error', err);
-      setTimeout(() => {
-        if (this[_status] === statusCode.error) {
-          this[_open](true);
-        }
-      }, 20000);
     };
   }
   getStatus() {
     return this[_status];
   }
   send(...args) {
-    if (this[_status] === statusCode.closed) {
-      throw new Error('websocket is closed' + this[_status]);
-    }
-    if (this[_status] === statusCode.error) {
-      this[_open](true);
-    }
+    this[_open](true);
     if (this[_status] === statusCode.connected) {
       this.ws.send(...args);
     } else {
