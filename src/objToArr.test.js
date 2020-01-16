@@ -12,3 +12,16 @@ test('objToArr', () => {
   expect(res.length).toBe(2);
   expect(objToArr(undefined, fn).length).toBe(0);
 })
+
+test('objToArr default, same as Object.values', () => {
+  const res = objToArr(
+    {
+      a: "b",
+      c: "d"
+    }
+  );
+  expect(res.length).toBe(2);
+  expect(res[0]).toBe("b");
+  expect(res[1]).toBe("d");
+
+})

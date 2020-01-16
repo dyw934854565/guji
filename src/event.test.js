@@ -75,6 +75,7 @@ test("do not on same", () => {
 test("handler should be function", () => {
   const event = createEvent()
   expect(() => event.on(123)).toThrowError()
+  expect(() => event.once(123)).toThrowError()
   expect(event.getHandlers().length).toBe(0)
 });
 

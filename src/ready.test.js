@@ -23,3 +23,11 @@ test("ready", (done) => {
     });
   });
 });
+
+test('callback once', () => {
+  const cb = jest.fn();
+  onReady('test', cb);
+  emitReady('test', 123);
+  emitReady('test', 456);
+  expect(cb).toHaveBeenCalledTimes(1);
+})
