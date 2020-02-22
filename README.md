@@ -1,5 +1,11 @@
 # guji
 
+[![NPM version][npm-image]][npm-url]
+![][travis-url]
+![][david-url]
+![][dt-url]
+![][license-url]
+
 This repository will provide some simple but useful function as lodash
 
 The best advantage is the cute name.
@@ -70,3 +76,15 @@ declare function arrToObj(arr: any[], fn: (value: any, index: number, array: any
 - timeout
 
 - timer
+
+## LICENSE ##
+
+MIT License
+
+
+[npm-url]: https://npmjs.org/package/guji
+[npm-image]: https://badge.fury.io/js/guji.png
+[travis-url]:https://api.travis-ci.org/leftstick/guji.svg?branch=master
+[david-url]: https://david-dm.org/leftstick/guji.png
+[dt-url]:https://img.shields.io/npm/dt/guji.svg
+[license-url]:https://img.shields.io/npm/l/guji.svg
