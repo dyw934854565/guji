@@ -1,10 +1,9 @@
 # guji
 
 [![NPM version][npm-image]][npm-url]
-![][travis-url]
+[![Build Status](https://travis-ci.com/dyw934854565/guji.svg?branch=master)](https://travis-ci.com/dyw934854565/guji)
 ![][david-url]
 ![][dt-url]
-![][license-url]
 
 This repository will provide some simple but useful function as lodash
 
@@ -84,7 +83,5 @@ MIT License
 
 [npm-url]: https://npmjs.org/package/guji
 [npm-image]: https://badge.fury.io/js/guji.png
-[travis-url]:https://api.travis-ci.org/leftstick/guji.svg?branch=master
 [david-url]: https://david-dm.org/leftstick/guji.png
 [dt-url]:https://img.shields.io/npm/dt/guji.svg
-[license-url]:https://img.shields.io/npm/l/guji.svg
