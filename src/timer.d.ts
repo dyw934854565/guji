@@ -1,2 +1,2 @@
-declare function timer () : (label: string, cb: Function) => void
+declare function timer () : (label: any, cb: Function) => void
 export default timer
