@@ -16,24 +16,22 @@ const reject = function (count = {}) {
 };
 
 test("cache", () => {
-  let count = 0;
-  function pow (a, b) {
-    count += 1;
+  const pow = jest.fn(function pow (a, b) {
     return Math.pow(a, b)
-  }
-  const powSum = cache(pow, null, true, (a, b) => "" + a + "-" + b);
+  });
+  const powSum = cache(pow, null, {keyFn: (a, b) => "" + a + "-" + b});
   expect(powSum(34, 2)).toBe(1156);
-  expect(count).toBe(1);
+  expect(pow).toBeCalledTimes(1);
   expect(powSum(34, 2)).toBe(1156);
-  expect(count).toBe(1);
+  expect(pow).toBeCalledTimes(1);
 
   expect(powSum(34, 8)).toBe(1785793904896);
-  expect(count).toBe(2);
+  expect(pow).toBeCalledTimes(2);
   expect(powSum(34, 8)).toBe(1785793904896);
-  expect(count).toBe(2);
+  expect(pow).toBeCalledTimes(2);
 });
 
-test("cache resolve", () => {
+test("cache resolve no keyFn", () => {
   const count = {}
   const resolveCache = cache(resolve(count));
   return resolveCache(34)
@@ -65,7 +63,7 @@ test("cache reject auto reset reject", () => {
 
 test("cache reject not reset reject", () => {
   const count = {}
-  const rejectCache = cache(reject(count), null, false);
+  const rejectCache = cache(reject(count), null, {resetReject: false});
   return rejectCache(34)
     .then(() => { }, data => {
       expect(count.count).toBe(1);
@@ -78,9 +76,9 @@ test("cache reject not reset reject", () => {
     });
 });
 
-test("cache with params", () => {
+test("cache with params with keyFn", () => {
   const count = {};
-  const resolveCache = cache(resolve(count), null, true, _ => _);
+  const resolveCache = cache(resolve(count), null, {keyFn: _ => _});
   return resolveCache(34)
     .then(data => {
       expect(count.count).toBe(1);
@@ -98,7 +96,7 @@ test("cache with params", () => {
     });
 });
 
-test("cache resolve call bath", () => {
+test("cache resolve call both", () => {
   const count = {};
   const resolveCache = cache(resolve(count));
   return Promise.all([resolveCache(34), resolveCache(34)])
@@ -133,3 +131,23 @@ test('thenable cache', () => {
       expect(data).toBe(2);
     });
 });
+
+test('msMaxAge', () => {
+  const count = {};
+  const resolveCache = cache(resolve(count), null, {msMaxAge: 1500});
+  return Promise.all([
+    resolveCache(34).then((data) => {
+      expect(count.count).toBe(1);
+      expect(data).toBe(34);
+    }),
+    resolveCache(22).then((data) => {
+      expect(count.count).toBe(1);
+      expect(data).toBe(34);
+    }),
+    sleep(2000).then(_ => resolveCache(22)).then((data) => {
+      expect(count.count).toBe(2);
+      expect(data).toBe(22);
+    })
+  ])
+    
+})

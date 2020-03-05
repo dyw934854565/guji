@@ -56,14 +56,19 @@ arrToObj([
 - cache
 
 ```typescript
-export default declare function cache(fn: Function, _thisArg?: any, resetReject?: boolean, keyFn?: (...args: any[]) => string): Function
+type CacheOptions = {
+    resetReject?: boolean,
+    keyFn?: (...args: any[]) => string,
+    msMaxAge?: number
+}
+export default declare function cache(fn: Function, _thisArg?: any, cacheOptions?: CacheOptions): Function
 ```
 缓存请求， 缓存计算；可配置keyFn按不同参数缓存;reject可清除缓存
 
 ```javascript
   var fibonacci = cache(function (n) {
     if (n <= 1) {
-        return 1;    
+        return 1;
     } else {
         return fibonacci(n-1) + fibonacci(n-2);
     }

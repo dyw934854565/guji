@@ -20,7 +20,7 @@ function refresh(fn, _thisArg) {
     if (lastRes) {
       lastRes.reject(new Error('data has expired'));
     }
-    if ((0, _getType.isType)(res, 'promise') || res && res.then && res.cache) {
+    if ((0, _getType.isType)(res, 'promise') || res && res.then && res.catch) {
       lastRes = (0, _getDefer2.default)();
       return Promise.race([res, lastRes.promise]);
     } else {
