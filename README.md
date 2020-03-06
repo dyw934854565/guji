@@ -28,7 +28,7 @@ const obj = arrToObj([
 // {key1: "value1", key2: "value2"}
 ```
 
-源码使用，让guji的源代码走babel编译
+源码使用，让guji的源代码走babel编译。非node环境建议源码使用
 
 ```javascript
 // webpack.config.js
@@ -72,7 +72,7 @@ export default declare function cache(fn: Function, _thisArg?: any, cacheOptions
     } else {
         return fibonacci(n-1) + fibonacci(n-2);
     }
-  }, null, false, n => n)
+  }, null, {keyFn: n => n})
   fibonacci(40)
   // 如果不用缓存，计算量会很大，很耗时
 ```
