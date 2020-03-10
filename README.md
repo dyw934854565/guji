@@ -1,7 +1,7 @@
 # guji
 
 [![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]](travis-url)
+[![Build Status][travis-image]][travis-url]
 [![NPM Download][dt-image]][npm-url]
 
 This repository will provide some simple but useful function as lodash
