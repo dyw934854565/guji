@@ -4,6 +4,6 @@ export interface Defer {
   resolve: (error: any) => void
 }
 
-declare function getDefer(msReject: number): Defer
+declare function getDefer(msReject?: number): Defer
 
 export default getDefer
