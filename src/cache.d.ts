@@ -1,4 +1,4 @@
-type CacheOptions = {
+export type CacheOptions = {
     resetReject?: boolean,
     keyFn?: (...args: any[]) => string,
     msMaxAge?: number
