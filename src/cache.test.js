@@ -1,5 +1,6 @@
 import cache from './cache'
 import sleep from './sleep'
+import {preventCache} from './cache'
 const resolve = function (count = {}) {
   count.count = count.count || 0;
   return function (data) {
@@ -151,3 +152,33 @@ test('msMaxAge', () => {
   ])
     
 })
+
+test("cache prevent", () => {
+  const count = {}
+  const resolveCache = cache(resolve(count), null, {resetReject: false, keyFn: (number) => {
+    if (number === 22) {
+      return preventCache;
+    }
+    return number;
+  }});
+  return resolveCache(22)
+    .then(data => {
+      expect(count.count).toBe(1);
+      expect(data).toBe(22);
+    })
+    .then(() => resolveCache(22))
+    .then(data => {
+      expect(count.count).toBe(2);
+      expect(data).toBe(22);
+    })
+    .then(() => resolveCache(23))
+    .then(data => {
+      expect(count.count).toBe(3);
+      expect(data).toBe(23);
+    })
+    .then(() => resolveCache(23))
+    .then(data => {
+      expect(count.count).toBe(3);
+      expect(data).toBe(23);
+    });
+});
