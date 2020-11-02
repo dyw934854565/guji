@@ -182,3 +182,16 @@ test("cache prevent", () => {
       expect(data).toBe(23);
     });
 });
+
+test('msMaxAge', () => {
+  const add = jest.fn((a, b) => a + b);
+
+  const addCache = cache(add);
+
+  expect(addCache(1, 3)).toBe(4);
+  expect(addCache(1, 3)).toBe(4);
+  expect(add).toBeCalledTimes(1);
+  addCache.clearCache();
+  expect(addCache(1, 3)).toBe(4);
+  expect(add).toBeCalledTimes(2);
+})

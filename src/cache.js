@@ -3,7 +3,7 @@ export const preventCache = {}
 export default function cache(fn, _thisArg, {resetReject = true, keyFn, msMaxAge = 0} = {}) {
   let res = {}
   let isCached = {}
-  return function (...args) {
+  const cachedFn = function (...args) {
     const key = isType(keyFn, 'function') ? keyFn(...args) : keyFn
     if (key === preventCache) {
       return fn.apply(_thisArg || this, args)
@@ -21,4 +21,12 @@ export default function cache(fn, _thisArg, {resetReject = true, keyFn, msMaxAge
     }
     return res[key]
   }
+  cachedFn.clearCache = function(key) {
+    if (typeof key !== 'undefined') {
+      delete isCached[key]
+    } else {
+      isCached = {}
+    }
+  }
+  return cachedFn
 }
