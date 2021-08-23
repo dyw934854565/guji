@@ -32,11 +32,11 @@ export default function rateLimit(tasks, rate, fn) {
             return
         }
         const res = fn ? fn(item) : item()
-        res.catch(() => {
-          errs.push(e)
+        res.catch((err) => {
+          errs.push(err)
         }).then(doRequest)
-      } catch (e) {
-        reject(e)
+      } catch (err) {
+        reject(err)
       }
     }
     Array.from({length: rate}).forEach(doRequest)
