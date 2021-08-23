@@ -23,17 +23,25 @@ function getNext(tasks) {
 function rateLimit(tasks, rate, fn) {
   let doneCount = 0;
   return new Promise((resolve, reject) => {
+    const errs = [];
     const doRequest = () => {
       try {
         const item = getNext(tasks);
         if (typeof item === 'undefined') {
           doneCount++;
           if (doneCount === rate) {
-            resolve();
+            if (!errs.length) {
+              resolve();
+            } else {
+              reject(errs);
+            }
           }
           return;
         }
-        (fn ? fn(item) : item()).catch().then(doRequest);
+        const res = fn ? fn(item) : item();
+        res.catch(() => {
+          errs.push(e);
+        }).then(doRequest);
       } catch (e) {
         reject(e);
       }
