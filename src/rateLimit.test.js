@@ -96,4 +96,11 @@ describe('rateLimit', () => {
     expect(res).toBe(undefined)
     expect(fn).toBeCalledTimes(10)
   })
+
+  test('function reject', () => {
+    const arr = [1, 2, 3, 4, 5, 6]
+    expect(rateLimit(arr, 2, function(item) {
+      return Promise.reject(new Error('ww'));
+    })).rejects.toThrow();
+  })
 })
