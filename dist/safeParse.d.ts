@@ -1,2 +1,2 @@
-declare function safeParse (str: any, defaultVal: any, onerror?: Function): any
+declare function safeParse (str: string, defaultVal: any, onerror?: (err: Error, str: string) => void): any
 export default safeParse

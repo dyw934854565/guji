@@ -1,2 +1,2 @@
-declare function safeFun(fn: Function, _thisArg?: any, handle?: Function): Function
+declare function safeFun<T extends Function>(fn: T, _thisArg?: any, handle?: (err: Error) => void): T
 export default safeFun

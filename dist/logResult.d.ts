@@ -1,2 +1,2 @@
-declare function logResult(fn: Function, text?: string, _this?: any, callback?: Function): Function
+declare function logResult<T extends Function>(fn: T, text?: string, _this?: any, callback?: Function): T
 export default logResult

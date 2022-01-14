@@ -1,9 +1,9 @@
-export interface Defer {
-  promise: Promise<any>,
-  reject: (result?: any) => void,
-  resolve: (error?: any) => void
+export interface Defer<T> {
+  promise: Promise<T>,
+  reject: (error?: any) => void,
+  resolve: (result: T) => void,
 }
 
-declare function getDefer(msReject?: number): Defer
+declare function getDefer<T>(msReject?: number): Defer<T>
 
 export default getDefer

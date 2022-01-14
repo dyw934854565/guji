@@ -1,8 +1,8 @@
-export type CacheOptions = {
+export type CacheOptions<T extends (...args: any) => any> = {
     resetReject?: boolean,
-    keyFn?: (...args: any[]) => string,
+    keyFn?: (...args: Parameters<T>) => string,
     msMaxAge?: number
 }
-declare function cache(fn: Function, _thisArg?: any, cacheOptions?: CacheOptions): Function
+declare function cache<T extends (...args: any) => any>(fn: T, _thisArg?: any, cacheOptions?: CacheOptions<T>): T
 
 export default cache

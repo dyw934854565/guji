@@ -1,2 +1,2 @@
-declare function safeObj(obj: object, handle?: Function): object
+declare function safeObj<T extends Record<any, any>>(obj: T, handle?: Function): T
 export default safeObj

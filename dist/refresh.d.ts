@@ -1,3 +1,3 @@
-declare function refresh(fn: () => Promise<any>, _thisArg?: any): Function
+declare function refresh<T>(fn: T, _thisArg?: any): T
 
 export default refresh

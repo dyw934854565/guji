@@ -1,2 +1,2 @@
-declare function logTime(fn: Function, text?: string, _this?: any, callback?: Function): Function
+declare function logTime<T extends Function>(fn: T, text?: string, _this?: any, callback?: Function): T
 export default logTime
