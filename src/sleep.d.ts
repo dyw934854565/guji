@@ -1,2 +1,2 @@
-declare function sleep (ms: number, PromiseValue?: any): Promise<any>
+declare function sleep<T>(ms: number, PromiseValue?: T): Promise<T>
 export default sleep

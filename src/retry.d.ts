@@ -1,2 +1,2 @@
-declare function retry(fn: Function, retryTimes?: number, _this?: any, onerror?: Function): Function
+declare function retry<T extends Function>(fn: T, retryTimes?: number, _this?: any, onerror?: (err: Error) => void): T
 export default retry

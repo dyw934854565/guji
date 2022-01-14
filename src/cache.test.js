@@ -1,6 +1,7 @@
 import cache from './cache'
 import sleep from './sleep'
 import {preventCache} from './cache'
+
 const resolve = function (count = {}) {
   count.count = count.count || 0;
   return function (data) {
