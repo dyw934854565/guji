@@ -24,6 +24,8 @@ function rateLimit(tasks, rate, fn) {
   let doneCount = 0;
   return new Promise((resolve, reject) => {
     const errs = [];
+    const errTasks = [];
+    const successTasks = [];
     const doRequest = () => {
       try {
         const item = getNext(tasks);
@@ -33,14 +35,17 @@ function rateLimit(tasks, rate, fn) {
             if (!errs.length) {
               resolve();
             } else {
-              reject(errs);
+              reject({ errs, errTasks, successTasks });
             }
           }
           return;
         }
         const res = fn ? fn(item) : item();
-        res.catch(err => {
+        res.then(() => {
+          successTasks.push(item);
+        }).catch(err => {
           errs.push(err);
+          errTasks.push(item);
         }).then(doRequest);
       } catch (err) {
         reject(err);
